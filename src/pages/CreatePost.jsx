@@ -34,6 +34,23 @@ const CreatePost = () => {
     }
   };
 
+  const imageUploadHandler = async (blobInfo) => {
+    const formData = new FormData();
+    formData.append("image", blobInfo.blob(), blobInfo.filename());
+
+    const token = localStorage.getItem("accessToken");
+    const response = await fetch("http://localhost:8000/api/upload", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    });
+
+    const data = await response.json();
+    return data.data.url;
+  };
+
   return (
     <div className="max-w-2xl mx-auto">
       <h1 className="text-2xl font-bold text-gray-900 mb-6">Write a Post</h1>
@@ -111,6 +128,7 @@ const CreatePost = () => {
                 "removeformat | help",
               content_style:
                 "body { font-family: Inter, sans-serif; font-size: 14px }",
+              images_upload_handler: imageUploadHandler,
             }}
           />
         </div>

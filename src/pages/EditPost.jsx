@@ -57,6 +57,23 @@ const EditPost = () => {
     }
   };
 
+  const imageUploadHandler = async (blobInfo) => {
+    const formData = new FormData();
+    formData.append("image", blobInfo.blob(), blobInfo.filename());
+
+    const token = localStorage.getItem("accessToken");
+    const response = await fetch("http://localhost:8000/api/upload", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    });
+
+    const data = await response.json();
+    return data.data.url;
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-64">
@@ -141,6 +158,7 @@ const EditPost = () => {
                 "removeformat | help",
               content_style:
                 "body { font-family: Inter, sans-serif; font-size: 14px }",
+              images_upload_handler: imageUploadHandler,
             }}
           />
         </div>
