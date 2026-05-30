@@ -88,9 +88,10 @@ const SinglePost = () => {
         />
       )}
 
-      <p className="text-gray-700 leading-relaxed whitespace-pre-wrap mb-8">
-        {post.content}
-      </p>
+      <div
+        className="text-gray-700 leading-relaxed mb-8 prose max-w-none"
+        dangerouslySetInnerHTML={{ __html: post.content }}
+      />
 
       {isAuthor && (
         <div className="flex items-center gap-3 border-t border-gray-200 pt-6">

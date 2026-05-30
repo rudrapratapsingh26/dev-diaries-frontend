@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { Editor } from "@tinymce/tinymce-react";
 import api from "../utils/axios";
 
 const CreatePost = () => {
   const navigate = useNavigate();
+  const editorRef = useRef(null);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -76,14 +78,40 @@ const CreatePost = () => {
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Content
           </label>
-          <textarea
-            name="content"
+          <Editor
+            apiKey="mmnprj43kfei1kxfne2vwhqqwthhkx877jzbn9t55e85c4ua"
+            onInit={(evt, editor) => (editorRef.current = editor)}
             value={formData.content}
-            onChange={handleChange}
-            required
-            rows={12}
-            placeholder="Write your post content here..."
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 resize-none"
+            onEditorChange={(content) => setFormData({ ...formData, content })}
+            init={{
+              height: 400,
+              menubar: false,
+              plugins: [
+                "advlist",
+                "autolink",
+                "lists",
+                "link",
+                "image",
+                "charmap",
+                "preview",
+                "searchreplace",
+                "visualblocks",
+                "code",
+                "fullscreen",
+                "insertdatetime",
+                "media",
+                "table",
+                "help",
+                "wordcount",
+              ],
+              toolbar:
+                "undo redo | blocks | bold italic underline | " +
+                "alignleft aligncenter alignright alignjustify | " +
+                "bullist numlist outdent indent | link image | " +
+                "removeformat | help",
+              content_style:
+                "body { font-family: Inter, sans-serif; font-size: 14px }",
+            }}
           />
         </div>
 
