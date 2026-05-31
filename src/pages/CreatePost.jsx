@@ -99,7 +99,7 @@ const CreatePost = () => {
             Content
           </label>
           <Editor
-            apiKey="your_tinymce_api_key"
+            apiKey="mmnprj43kfei1kxfne2vwhqqwthhkx877jzbn9t55e85c4ua"
             onInit={(evt, editor) => (editorRef.current = editor)}
             value={formData.content}
             onEditorChange={(content) => setFormData({ ...formData, content })}
