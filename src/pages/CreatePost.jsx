@@ -39,13 +39,16 @@ const CreatePost = () => {
     formData.append("image", blobInfo.blob(), blobInfo.filename());
 
     const token = localStorage.getItem("accessToken");
-    const response = await fetch("http://localhost:8000/api/upload", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      body: formData,
-    });
+    const response = await fetch(
+      "https://dev-diaries-backend-production.up.railway.app/api/upload",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      }
+    );
 
     const data = await response.json();
     return data.data.url;
@@ -96,7 +99,7 @@ const CreatePost = () => {
             Content
           </label>
           <Editor
-            apiKey="mmnprj43kfei1kxfne2vwhqqwthhkx877jzbn9t55e85c4ua"
+            apiKey="your_tinymce_api_key"
             onInit={(evt, editor) => (editorRef.current = editor)}
             value={formData.content}
             onEditorChange={(content) => setFormData({ ...formData, content })}
